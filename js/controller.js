@@ -1,7 +1,41 @@
 var Controller = {
   init: function() {
-    Model.init(["Player 1", "Player 2"], 3, 3);
-    View.init(3,3);
+    var width = 5;
+    var height = 5;
+    Model.init(["Player 1", "Player 2"], width, height);
+    View.init(width, height);
+    View.updateLines(Model.getMarkedLines());
+    View.updateSquares(Model.getCompletedSquares());
+    Controller.assignment3();
+  },
+  assignment3: function() {
+    Model.setLineMarked(2,2,"right");
+    Model.nextPlayer();
+    Model.setLineMarked(2,2,"left");
+    Model.nextPlayer();
+    Model.setLineMarked(2,2,"top");
+    Model.nextPlayer();
+
+    Model.setLineMarked(0,0,"right");
+    Model.nextPlayer();
+    Model.setLineMarked(2,2,"bottom");
+    Model.nextPlayer();
+    Model.setLineMarked(0,0,"left");
+    Model.nextPlayer();
+    Model.setLineMarked(0,0,"top");
+    Model.nextPlayer();
+    Model.setLineMarked(0,0,"bottom");
+    Model.nextPlayer();
+
+    Model.setLineMarked(1,2,"right");
+    Model.nextPlayer();
+    Model.setLineMarked(1,1,"left");
+    Model.nextPlayer();
+    Model.setLineMarked(2,1,"top");
+    Model.nextPlayer();
+    Model.setLineMarked(0,2,"bottom");
+    Model.nextPlayer();
+
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
   }

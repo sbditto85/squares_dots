@@ -28,7 +28,7 @@ var View = {
     var t = document.getElementById("game_table");
     lineData.map(function(line) {
       var td = t.rows[line.y].cells[line.x];
-      td.style["border-"+line.wall] = "2px solid blue";
+      td.style["border-"+line.side] = "2px solid blue";
     });
   },
   //squareData [{x: Int, y: Int, color: String}]

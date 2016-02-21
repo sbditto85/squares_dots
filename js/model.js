@@ -6,6 +6,7 @@ var Model = {
   init: function(names, width, height) {
     Model.initPlayers(names);
     Model.initGrid(width, height);
+    Model.curPlayer = 0; //start with player 0
   },
   initPlayers: function(names) {
     Model.players = names.map(function(name, i){
@@ -15,47 +16,38 @@ var Model = {
   //width and height are in squares
   initGrid: function(width, height) {
     var top, left, bottom, right = null;
-    for(var i = 0; i < width; i++) {
-      for(var j = 0; j < height; j++) {
+    for(var j = 0; j < height; j++) {
+      for(var i = 0; i < width; i++) {
         top = left = bottom = right = null;
         if(j > 0) {
-          top = Model.squares[i][j-1].bottom;
+          top = Model.squares[j-1][i].bottom;
         }
         if(!top) {
           top = new Model.Line(false);
         }
         if(i > 0) {
-          left = Model.squares[i-1][j].right;
+          left = Model.squares[j][i-1].right;
         }
         if(!left) {
           left = new Model.Line(false);
         }
         bottom = new Model.Line(false);
         right = new Model.Line(false);
-        if(typeof Model.squares[i] == "undefined") {
-          Model.squares[i] = [];
+        if(typeof Model.squares[j] == "undefined") {
+          Model.squares[j] = [];
         }
-        Model.squares[i][j] = new Model.Square(top, right, bottom, left, null);
+        Model.squares[j][i] = new Model.Square(top, right, bottom, left, null);
       }
     }
   },
-  //                     ("top"     ,     {x: , y: })
-  //                     ({x: , y: },     "right"   )
-  //                     ({x: , y: },     {x: , y: })
-  //TODO: check if square is done after marking the line
-  setLineMarked: function(squareOnePoint, squareTwoPoint) {
-    if(squareOnePoint == "top" || squareOnePoint == "left") {
-      Model.squares[squareTwoPoint.x][squareTwoPoint.y][squareOnePoint].selected = true;
-    } else if(squareTwoPoint == "right" || squareTwoPoint == "bottom") {
-      Model.squares[squareOnePoint.x][squareOnePoint.y][squareTwoPoint].selected = true;
-    } else if(squareOnePoint.x == squareTwoPoint.x && Math.abs(squareOnePoint.y-squareTwoPoint.y) == 1) {
-      var x = squareOnePoint.x;
-      var y = Math.min(squareOnePoint.y, squareTwoPoint.y);
-      Model.squares[x][y].bottom.selected = true;
-    } else if(squareOnePoint.y == squareTwoPoint.y && Math.abs(squareOnePoint.x-squareTwoPoint.x) == 1) {
-      var y = squareOnePoint.y;
-      var x = Math.min(squareOnePoint.x, squareTwoPoint.x);
-      Model.squares[x][y].right.selected = true;
+  setLineMarked: function(x, y, side) {
+    Model.squares[y][x][side].selected = true;
+    Model.squares[y][x].checkFinished(Model.players[Model.curPlayer]);
+  },
+  nextPlayer: function() {
+    Model.curPlayer += 1;
+    if(Model.curPlayer == Model.players.length) {
+      Model.curPlayer = 0;
     }
   },
   getMarkedLines: function() {
@@ -63,21 +55,22 @@ var Model = {
       return arr.map(function(square, i) {
         var lines = [];
         if(square.left.selected) {
-          lines.push({x: i, y: j, wall: "left"});
+          lines.push({x: i, y: j, side: "left"});
         }
         if(square.right.selected) {
-          lines.push({x: i, y: j, wall: "right"});
+          lines.push({x: i, y: j, side: "right"});
         }
         if(square.top.selected) {
-          lines.push({x: i, y: j, wall: "top"});
+          lines.push({x: i, y: j, side: "top"});
         }
         if(square.bottom.selected) {
-          lines.push({x: i, y: j, wall: "bottom"});
+          lines.push({x: i, y: j, side: "bottom"});
         }
         return lines;
       });
     });
-    return [].concat.apply([], linesArr).filter(function(arr){return arr.length > 0}); //flatten the multi dimensional array
+    var twoD = [].concat.apply([], linesArr).filter(function(arr){return arr.length > 0}); //flatten the multi dimensional array
+    return [].concat.apply([], twoD);
   },
   getCompletedSquares: function() {
     var squaresArr = Model.squares.map(function(arr, j) {
@@ -107,5 +100,16 @@ var Model = {
     this.name = name;
     this.color = color;
     this.squares = []; // [[x,y]]
+  }
+};
+
+Model.Square.prototype.checkFinished = function(player) {
+  if(this.top.selected
+  && this.right.selected
+  && this.bottom.selected
+  && this.left.selected
+  && player) {
+    this.owner = player;
+    player.squares.push(this);
   }
 };
