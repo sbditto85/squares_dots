@@ -1,13 +1,15 @@
 var Model = {
   players: [], //[Player]
+  curPlayer: null,
   squares: [], //[[Square]]
+  colors: ["red", "blue", "green", "purple", "orange"],
   init: function(names, width, height) {
     Model.initPlayers(names);
     Model.initGrid(width, height);
   },
   initPlayers: function(names) {
-    Model.players = names.map(function(name){
-      return new Model.Player(name);
+    Model.players = names.map(function(name, i){
+      return new Model.Player(name, Model.colors[i]);
     });
   },
   //width and height are in squares
@@ -37,6 +39,60 @@ var Model = {
       }
     }
   },
+  //                     ("top"     ,     {x: , y: })
+  //                     ({x: , y: },     "right"   )
+  //                     ({x: , y: },     {x: , y: })
+  //TODO: check if square is done after marking the line
+  setLineMarked: function(squareOnePoint, squareTwoPoint) {
+    if(squareOnePoint == "top" || squareOnePoint == "left") {
+      Model.squares[squareTwoPoint.x][squareTwoPoint.y][squareOnePoint].selected = true;
+    } else if(squareTwoPoint == "right" || squareTwoPoint == "bottom") {
+      Model.squares[squareOnePoint.x][squareOnePoint.y][squareTwoPoint].selected = true;
+    } else if(squareOnePoint.x == squareTwoPoint.x && Math.abs(squareOnePoint.y-squareTwoPoint.y) == 1) {
+      var x = squareOnePoint.x;
+      var y = Math.min(squareOnePoint.y, squareTwoPoint.y);
+      Model.squares[x][y].bottom.selected = true;
+    } else if(squareOnePoint.y == squareTwoPoint.y && Math.abs(squareOnePoint.x-squareTwoPoint.x) == 1) {
+      var y = squareOnePoint.y;
+      var x = Math.min(squareOnePoint.x, squareTwoPoint.x);
+      Model.squares[x][y].right.selected = true;
+    }
+  },
+  getMarkedLines: function() {
+    var linesArr = Model.squares.map(function(arr, j) {
+      return arr.map(function(square, i) {
+        var lines = [];
+        if(square.left.selected) {
+          lines.push({x: i, y: j, wall: "left"});
+        }
+        if(square.right.selected) {
+          lines.push({x: i, y: j, wall: "right"});
+        }
+        if(square.top.selected) {
+          lines.push({x: i, y: j, wall: "top"});
+        }
+        if(square.bottom.selected) {
+          lines.push({x: i, y: j, wall: "bottom"});
+        }
+        return lines;
+      });
+    });
+    return [].concat.apply([], linesArr).filter(function(arr){return arr.length > 0}); //flatten the multi dimensional array
+  },
+  getCompletedSquares: function() {
+    var squaresArr = Model.squares.map(function(arr, j) {
+      return arr.map(function(square, i) {
+        if(square.left.selected
+        && square.right.selected
+        && square.top.selected
+        && square.bottom.selected
+        && square.owner) {
+          return {x: i, y: j, color: square.owner.color};
+        }
+      });
+    });
+    return [].concat.apply([], squaresArr).filter(function(square){return square;}); //flatten the multi dimensional array
+  },
   Line: function(selected) {
     this.selected = selected;
   },
@@ -47,8 +103,9 @@ var Model = {
     this.left = left;
     this.owner = owner; //null means not set
   },
-  Player: function(name) {
+  Player: function(name, color) {
     this.name = name;
+    this.color = color;
     this.squares = []; // [[x,y]]
   }
 };
