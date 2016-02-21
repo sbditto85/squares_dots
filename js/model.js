@@ -1,40 +1,54 @@
 var Model = {
+  players: [], //[Player]
   squares: [], //[[Square]]
-  dots: [], //[[Dot]]
+  init: function(names, width, height) {
+    Model.initPlayers(names);
+    Model.initGrid(width, height);
+  },
+  initPlayers: function(names) {
+    Model.players = names.map(function(name){
+      return new Model.Player(name);
+    });
+  },
   //width and height are in squares
   initGrid: function(width, height) {
-    //x and y are in "dot cordinates"
-    var x = 0;
-    var y = 0;
-    var topLeft = new Model.Dot(x, y);
-    dots[x][y] = topLeft;
-    var bottomLeft = new Model.Dot(x, y+1);
-    dots[x][y+1] = bottomLeft;
-    var topRight = new Model.Dot(x+1, y);
-    dots[x+1][y] = topRight;
-    var bottomRight = new Model.Dot(x+1, y+1);
-    dots[x+1][y+1] = bottomRight;
-    var square = new Model.Square(topLeft, topRight, bottomLeft, bottomRight, null);
-    square[0][0] = square;
-    topLeft.setSquare(square);
-    topRight.setSquare(square);
-    bottomLeft.setSquare(square);
-    bottomRight.setSquare(square);
+    var top, left, bottom, right = null;
+    for(var i = 0; i < width; i++) {
+      for(var j = 0; j < height; j++) {
+        top = left = bottom = right = null;
+        if(j > 0) {
+          top = Model.squares[i][j-1].bottom;
+        }
+        if(!top) {
+          top = new Model.Line(false);
+        }
+        if(i > 0) {
+          left = Model.squares[i-1][j].right;
+        }
+        if(!left) {
+          left = new Model.Line(false);
+        }
+        bottom = new Model.Line(false);
+        right = new Model.Line(false);
+        if(typeof Model.squares[i] == "undefined") {
+          Model.squares[i] = [];
+        }
+        Model.squares[i][j] = new Model.Square(top, right, bottom, left, null);
+      }
+    }
   },
-  Dot: function(x, y) {
-    this.x;
-    this.y;
-    this.square = null;
+  Line: function(selected) {
+    this.selected = selected;
   },
-  Square: function(topLeft, topRight, bottomLeft, bottomRight, owner) {
-    this.topLeft = topLeft;
-    this.topRight = topRight;
-    this.bottomLeft = bottomLeft;
-    this.bottomRight = bottomRight;
-    this.owner = owner; //null is not owned yet
+  Square: function(top, right, bottom, left, owner) {
+    this.top = top;
+    this.right = right;
+    this.bottom = bottom;
+    this.left = left;
+    this.owner = owner; //null means not set
+  },
+  Player: function(name) {
+    this.name = name;
+    this.squares = []; // [[x,y]]
   }
-};
-
-Model.Dot.prototype.setSquare(square) {
-  this.square = square;
 };
