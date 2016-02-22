@@ -13,6 +13,17 @@ var Model = {
       return new Model.Player(name, Model.colors[i]);
     });
   },
+  // [{name: , color: , isTurn: , score: }]
+  getPlayersInfo: function() {
+    return Model.players.map(function(player, i) {
+      return {
+        name: player.name,
+        color: player.color,
+        isTurn: i == Model.curPlayer,
+        score: player.squares.length
+      }
+    });
+  },
   //width and height are in squares
   initGrid: function(width, height) {
     var top, left, bottom, right = null;

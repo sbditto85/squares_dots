@@ -1,6 +1,6 @@
 #game_grid table {
   margin: auto;
-  margin-top: 60px;
+  margin-top: 20px;
   border-collapse: collapse;
 }
 
@@ -10,7 +10,7 @@
   position: relative;
   top: 0;
   left: 0;
-  border: 2px dotted blue;
+  border: 2px dotted grey;
 }
 
 .square div {
@@ -35,4 +35,32 @@
 .square .bottomRight {
   bottom: -6px;
   right: -6px;
+}
+
+#player_grid_wrapper {
+  /*width: 600px;*/
+  margin: auto;
+  display: table;
+}
+
+#player_grid_wrapper > div {
+  width: 100px;
+  display: inline-block;
+  margin: 15px;
+}
+
+.player_color {
+  display: inline-block;
+  margin-left: 15px;
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+}
+.player_color.red {
+  background-color: red;
+  color: red;
+}
+.player_color.blue {
+  background-color: blue;
+  color: blue;
 }

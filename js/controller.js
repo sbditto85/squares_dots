@@ -3,7 +3,7 @@ var Controller = {
     var width = 5;
     var height = 5;
     Model.init(["Player 1", "Player 2"], width, height);
-    View.init(width, height);
+    View.init(width, height, Model.getPlayersInfo());
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
     Controller.assignment3();
@@ -35,9 +35,14 @@ var Controller = {
     Model.nextPlayer();
     Model.setLineMarked(0,2,"bottom");
     Model.nextPlayer();
+    Model.setLineMarked(2,1,"left");
+    Model.nextPlayer();
+    Model.setLineMarked(2,1,"right");
+    Model.nextPlayer();
 
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
+    View.updatePlayers(Model.getPlayersInfo());
   }
 };
 
