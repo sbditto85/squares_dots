@@ -43,10 +43,15 @@
   display: table;
 }
 
+#player_grid_wrapper .your_turn {
+  border: 1px solid gold;
+}
+
 #player_grid_wrapper > div {
   width: 100px;
   display: inline-block;
   margin: 15px;
+  padding: 5px;
 }
 
 .player_color {
@@ -63,4 +68,20 @@
 .player_color.blue {
   background-color: blue;
   color: blue;
+}
+.player_color.purple {
+  background-color: purple;
+  color: purple;
+}
+.player_color.green {
+  background-color: green;
+  color: green;
+}
+.player_color.orange {
+  background-color: orange;
+  color: orange;
+}
+.player_color.yellow {
+  background-color: yellow;
+  color: yellow;
 }
