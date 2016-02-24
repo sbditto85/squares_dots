@@ -50,17 +50,35 @@ var View = {
   //lineData [{x: Int, y: Int, side: String}]
   updateLines: function(lineData) {
     var t = document.getElementById("game_table");
+    //Imperative
+    for(var i = 0; i < lineData.length; i++) {
+      var line = lineData[i];
+      var td = t.rows[line.y].cells[line.x];
+      td.style["border-"+line.side] = "2px solid blue";
+    }
+    //FUNCTIONAL
+    /*
     lineData.map(function(line) {
       var td = t.rows[line.y].cells[line.x];
       td.style["border-"+line.side] = "2px solid blue";
     });
+    */
   },
   //squareData [{x: Int, y: Int, color: String}]
   updateSquares: function(squareData) {
     var t = document.getElementById("game_table");
+    //Imperative
+    for(var i = 0; i < squareData.length; i++) {
+      var square = squareData[i];
+      var td = t.rows[square.y].cells[square.x];
+      td.style["background-color"] = square.color;
+    }
+    //FUNCTIONAL
+    /*
     squareData.map(function(square) {
       var td = t.rows[square.y].cells[square.x];
       td.style["background-color"] = square.color;
     });
+    */
   }
 };

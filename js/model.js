@@ -9,12 +9,33 @@ var Model = {
     Model.curPlayer = 0; //start with player 0
   },
   initPlayers: function(names) {
+    //Imperative version
+    for(var i = 0; i < names.length; i++) {
+      Model.players[i] = new Model.Player(names[i], Model.colors[i]);
+    }
+    /* //FUNCATIONAL VERSION
     Model.players = names.map(function(name, i){
       return new Model.Player(name, Model.colors[i]);
     });
+    */
   },
   // [{name: , color: , isTurn: , score: }]
   getPlayersInfo: function() {
+    //Imperative version
+    var arr = [];
+    for(var i = 0; i < Model.players.length; i++) {
+      var player = Model.players[i];
+      arr.push(
+        {
+          name:  player.name,
+          color: player.color,
+          isTurn: i == Model.curPlayer,
+          score: player.squares.length
+        }
+      );
+    }
+    return arr;
+    /* //FUNCTIONAL version
     return Model.players.map(function(player, i) {
       return {
         name: player.name,
@@ -23,6 +44,7 @@ var Model = {
         score: player.squares.length
       }
     });
+    */
   },
   //width and height are in squares
   initGrid: function(width, height) {
@@ -62,6 +84,27 @@ var Model = {
     }
   },
   getMarkedLines: function() {
+    //Imperative version
+    var arr = [];
+    for(var j = 0; j < Model.squares.length; j++) {
+      for(var i = 0; i < Model.squares[j].length; i++) {
+        var square = Model.squares[j][i];
+        if(square.left.selected) {
+          arr.push({x: i, y: j, side: "left"});
+        }
+        if(square.right.selected) {
+          arr.push({x: i, y: j, side: "right"});
+        }
+        if(square.top.selected) {
+          arr.push({x: i, y: j, side: "top"});
+        }
+        if(square.bottom.selected) {
+          arr.push({x: i, y: j, side: "bottom"});
+        }
+      }
+    }
+    return arr;
+    /* FUNCTIONAL VERSION
     var linesArr = Model.squares.map(function(arr, j) {
       return arr.map(function(square, i) {
         var lines = [];
@@ -82,8 +125,25 @@ var Model = {
     });
     var twoD = [].concat.apply([], linesArr).filter(function(arr){return arr.length > 0}); //flatten the multi dimensional array
     return [].concat.apply([], twoD);
+    */
   },
   getCompletedSquares: function() {
+    //Imperative version
+    var arr = [];
+    for(var j = 0; j < Model.squares.length; j++) {
+      for(var i = 0; i < Model.squares[j].length; i++) {
+        var square = Model.squares[j][i];
+        if(square.left.selected
+        && square.right.selected
+        && square.top.selected
+        && square.bottom.selected
+        && square.owner) {
+          arr.push({x: i, y: j, color: square.owner.color});
+        }
+      }
+    }
+    return arr;
+    /* //FUNCTIONAL STYLE
     var squaresArr = Model.squares.map(function(arr, j) {
       return arr.map(function(square, i) {
         if(square.left.selected
@@ -96,6 +156,7 @@ var Model = {
       });
     });
     return [].concat.apply([], squaresArr).filter(function(square){return square;}); //flatten the multi dimensional array
+    */
   },
   Line: function(selected) {
     this.selected = selected;
