@@ -47,7 +47,7 @@ var View = {
     var html = View.genPlayerGrid(playersInfo);
     View.insertPlayerGridHtml(html);
   },
-  //lineData [{x: Int, y: Int, wall: String}]
+  //lineData [{x: Int, y: Int, side: String}]
   updateLines: function(lineData) {
     var t = document.getElementById("game_table");
     lineData.map(function(line) {

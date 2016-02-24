@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Squares and Dots - Software Design</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <h1>Software Design</h1>
+    <dl>
+      <dt>Model</dt>
+      <dd>
+        <dl>
+          <dt>Data</dt>
+          <dd>
+            <dl>
+              <dt>players: [Player]</dt>
+              <dd>An array of players in the game each created from the Player class</dd>
+              <dt>current player: Int</dt>
+              <dd>index of the current player in the players array</dd>
+              <dt>colors: [String]</dt>
+              <dd>strings to represent the possible colors to represent the players squares</dd>
+            </dl>
+          </dd>
+          <dt>Functions</dt>
+          <dd>
+            <dl>
+              <dt>init: ([String], Int, Int)</dt>
+              <dd>The init function will take a array of strings representing the player names and the width and height of the grid then using other functions initialize the players and grid. Essentially a way to set the inital state up. </dd>
+              <dt>initPlayers: ([String])</dt>
+              <dd>The init function will take a array of strings representing the player names initialize the players. </dd>
+              <dt>initGrid: (Int, Int)</dt>
+              <dd>The init function will take the width and height of the grid then initialize the grid.</dd>
+              <dt>getPlayersInfo: () -> {name: String,color: String, isTurn: Bool, score: Int}</dt>
+              <dd>Return the player info in a generic way the view can understand.</dd>
+              <dt>setLineMarked: (Int, Int, String)</dt>
+              <dd>Set a certain squares side marked.</dd>
+              <dt>getMarkedLines: () -> {x: Int, y: Int, side: String}</dt>
+              <dd>Get all the marked lines in the grid in a generic object the view will understand</dd>
+              <dt>nextPlayer: ()</dt>
+              <dd>Move the current player index to the next player</dd>
+              <dt>getCompletedSquares: () -> {x: Int, y: Int, color: String}</dt>
+              <dd>Get a list of all completed squares and the color they should be</dd>
+            </dl>
+          </dd>
+          <dt>Classes</dt>
+          <dd>
+            <dl>
+              <dt>Line: selected: Bool</dt>
+              <dd>Used to keep track of wether a line is selected (concider removing)</dd>
+              <dt>Square: top: Line, right: Line, bottom: Line, left: Line, owner: Player<dt>
+              <dd>Used the represent the squares in the grid, the main state of the game. The only function this as is to check if its compelted and assign the passed user as the owner.</dd>
+              <dt>Player: name: String, color: String, squares: [Square]</dt>
+              <dd>A class to represent the information of the user, including the squares the player owns</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+      <!--
+      <dt>View</dt>
+      <dd>
+        <dl>
+          <dt>Data</dt>
+          <dd>
+            <dl>
+              <dt>object name</dt>
+              <dd>info</dd>
+            </dl>
+          </dd>
+          <dt>Functions</dt>
+          <dd>
+            <dl>
+              <dt>function1</dt>
+              <dd>info</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+      <dt>Controller</dt>
+      <dd>
+        <dl>
+          <dt>Data</dt>
+          <dd>
+            <dl>
+              <dt>object name</dt>
+              <dd>info</dd>
+            </dl>
+          </dd>
+          <dt>Functions</dt>
+          <dd>
+            <dl>
+              <dt>function1</dt>
+              <dd>info</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+    -->
+    </dl>
+  </body>
+</html>

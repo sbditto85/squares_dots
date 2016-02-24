@@ -1,3 +1,8 @@
+#nav {
+  width: 250px;
+  margin: auto;
+  text-align: center;
+}
 #game_grid table {
   margin: auto;
   margin-top: 20px;

@@ -39,6 +39,8 @@ var Controller = {
     Model.nextPlayer();
     Model.setLineMarked(2,1,"right");
     Model.nextPlayer();
+    Model.setLineMarked(1,1,"top");
+    Model.nextPlayer();
 
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
