@@ -6,6 +6,7 @@ var Controller = {
     View.init(width, height, Model.getPlayersInfo());
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
+    View.addEvents();
     Controller.assignment3();
   },
   assignment3: function() {
@@ -45,6 +46,7 @@ var Controller = {
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
     View.updatePlayers(Model.getPlayersInfo());
+    View.addEvents();
   }
 };
 

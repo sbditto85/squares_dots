@@ -2,7 +2,7 @@ var Model = {
   players: [], //[Player]
   curPlayer: null,
   squares: [], //[[Square]]
-  colors: ["purple", "green", "blue", "red", "orange", "yellow"],
+  colors: ["purple", "grey", "blue", "red", "orange", "yellow"],
   init: function(names, width, height) {
     Model.initPlayers(names);
     Model.initGrid(width, height);
