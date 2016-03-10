@@ -291,7 +291,6 @@ var View = {
       }
     } else {
       //different square
-      console.log(clickedElement.className, x, x2, y, y2);
       switch (clickedElement.className) {
         case "topLeft":
           if(Math.abs(x2 - x) != 0) {
@@ -299,6 +298,9 @@ var View = {
           } else if(Math.abs(y2 - y) != 0) {
             Controller.setLineMarked(x2, y2, "left");
           }
+        break;
+        case "topRight":
+          Controller.setLineMarked(x2, y2, "right");
         break;
         case "bottomLeft":
           Controller.setLineMarked(x2, y2, "bottom");
