@@ -59,20 +59,21 @@ var View = {
     var y = parent.parentNode.rowIndex;
     var table = document.getElementById("game_table");
     var totalOptions = 0;
-    var startFrom = "topLeft";
     switch(clickedElement.className) {
       case "topLeft":
         //check parent (top and left)
         if(!parent.dataset.top) {
           totalOptions += 1;
           var node = parent.querySelector(".topRight");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "topLeft");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         if(!parent.dataset.left) {
           totalOptions += 1;
           var node = parent.querySelector(".bottomLeft");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "topLeft");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         //check square up (left)
@@ -81,7 +82,8 @@ var View = {
           if(!square.dataset.left) {
             totalOptions += 1;
             var node = square.querySelector(".topLeft");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "topLeft");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
@@ -91,24 +93,26 @@ var View = {
           if(!square.dataset.top) {
             totalOptions += 1;
             var node = square.querySelector(".topLeft");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "topLeft");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
       break;
       case "topRight":
-        startFrom = "topRight";
         //check parent (top and right)
         if(!parent.dataset.top) {
           totalOptions += 1;
           var node = parent.querySelector(".topLeft");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "topRight");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         if(!parent.dataset.right) {
           totalOptions += 1;
           var node = parent.querySelector(".bottomRight");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "topRight");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         //check square up (right)
@@ -117,7 +121,8 @@ var View = {
           if(!square.dataset.right) {
             totalOptions += 1;
             var node = square.querySelector(".topRight");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "topRight");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
@@ -127,24 +132,26 @@ var View = {
           if(!square.dataset.top) {
             totalOptions += 1;
             var node = square.querySelector(".topRight");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "topRight");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
       break;
       case "bottomLeft":
-        startFrom = "bottomLeft";
         //check parent (left and bottom)
         if(!parent.dataset.left) {
           totalOptions += 1;
           var node = parent.querySelector(".topLeft");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "bottomLeft");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         if(!parent.dataset.bottom) {
           totalOptions += 1;
           var node = parent.querySelector(".bottomRight");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "bottomLeft");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         //check square down (left)
@@ -153,7 +160,8 @@ var View = {
           if(!square.dataset.left) {
             totalOptions += 1;
             var node = square.querySelector(".bottomLeft");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "bottomLeft");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
@@ -163,24 +171,26 @@ var View = {
           if(!square.dataset.bottom) {
             totalOptions += 1;
             var node = square.querySelector(".bottomLeft");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "bottomLeft");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
       break;
       case "bottomRight":
-        startFrom = "bottomRight";
         //check parent (bottom and right)
         if(!parent.dataset.right) {
           totalOptions += 1;
           var node = parent.querySelector(".topRight");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "bottomRight");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         if(!parent.dataset.bottom) {
           totalOptions += 1;
           var node = parent.querySelector(".bottomLeft");
-          node.addEventListener("click", View.endLine);
+          node.func = View.genEndLine(x, y, "bottomRight");
+          node.addEventListener("click", node.func);
           node.classList.add("endLine");
         }
         //check square down (right)
@@ -189,7 +199,8 @@ var View = {
           if(!square.dataset.right) {
             totalOptions += 1;
             var node = square.querySelector(".bottomRight");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "bottomRight");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
@@ -199,7 +210,8 @@ var View = {
           if(!square.dataset.bottom) {
             totalOptions += 1;
             var node = square.querySelector(".bottomRight");
-            node.addEventListener("click", View.endLine);
+            node.func = View.genEndLine(x, y, "bottomRight");
+            node.addEventListener("click", node.func);
             node.classList.add("endLine");
           }
         }
@@ -219,22 +231,24 @@ var View = {
       View.endLine(event, x, y, startFrom);
     };
   },
-  endLine: function(event) {
+  endLine: function(event, x, y, startFrom) {
     var clickedElement = event.target;
     var parent = clickedElement.parentNode;
     var x2 = parent.cellIndex;
     var y2 = parent.parentNode.rowIndex;
+    View.resetEventListeners();
     if(x == x2 && y == y2) {
-      console.log("same squere");
       //same square
       switch (clickedElement.className) {
         case "topLeft":
           switch (startFrom) {
             case "topRight":
             //top
+            Controller.setLineMarked(x, y, "top");
             break;
             case "bottomLeft":
             //left
+            Controller.setLineMarked(x, y, "left");
             break;
           }
         break;
@@ -242,9 +256,11 @@ var View = {
           switch (startFrom) {
             case "topLeft":
             //top
+            Controller.setLineMarked(x, y, "top");
             break;
             case "bottomRight":
             //right
+            Controller.setLineMarked(x, y, "right");
             break;
           };
           break;
@@ -252,9 +268,11 @@ var View = {
           switch (startFrom) {
             case "bottomRight":
             //bottom
+            Controller.setLineMarked(x, y, "bottom");
             break;
             case "topLeft":
             //left
+            Controller.setLineMarked(x, y, "left");
             break;
           }
           break;
@@ -262,43 +280,37 @@ var View = {
           switch (startFrom) {
             case "bottomLeft":
             //bottom
+            Controller.setLineMarked(x, y, "bottom");
             break;
             case "topRight":
             //right
+            Controller.setLineMarked(x, y, "right");
             break;
           }
           break;
       }
     } else {
       //different square
-      console.log("different square");
-      switch (x - x2) {
-        case 1:
-        //right
-        break;
-        case -1:
-        //left
-        break;
-        case 0:
-          switch (y-y2) {
-            case 1:
-            //top
-            break;
-            case -1:
-            //bottom
-            break;
+      console.log(clickedElement.className, x, x2, y, y2);
+      switch (clickedElement.className) {
+        case "topLeft":
+          if(Math.abs(x2 - x) != 0) {
+            Controller.setLineMarked(x2, y2, "top");
+          } else if(Math.abs(y2 - y) != 0) {
+            Controller.setLineMarked(x2, y2, "left");
           }
+        break;
+        case "bottomLeft":
+          Controller.setLineMarked(x2, y2, "bottom");
         break;
       }
     }
-    //submit for update to selected wall
-    //reset event listners and remove end line class
   },
   resetEventListeners: function() {
     var divs = document.querySelectorAll(".endLine");
     for(var i = 0; i < divs.length; i++) {
       var div = divs[i];
-      div.removeEventListener("click", View.endLine);
+      div.removeEventListener("click", div.func);
       div.classList.remove("endLine");
     }
     View.addEvents();

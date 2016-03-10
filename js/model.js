@@ -75,7 +75,24 @@ var Model = {
   },
   setLineMarked: function(x, y, side) {
     Model.squares[y][x][side].selected = true;
-    Model.squares[y][x].checkFinished(Model.players[Model.curPlayer]);
+    var curPlayer = Model.players[Model.curPlayer];
+    var numFinished = 0;
+    Model.squares[y][x].checkFinished(curPlayer) ? numFinished += 1 : 0;
+    if(x > 0) {
+      Model.squares[y][x - 1].checkFinished(curPlayer) ? numFinished += 1 : 0;
+    }
+    if(x < Model.squares[y].length - 1) {
+      Model.squares[y][x + 1].checkFinished(curPlayer) ? numFinished += 1 : 0;
+    }
+    if(y > 0) {
+      Model.squares[y - 1][x].checkFinished(curPlayer) ? numFinished += 1 : 0;
+    }
+    if(y < Model.squares.length - 1) {
+      Model.squares[y + 1][x].checkFinished(curPlayer) ? numFinished += 1 : 0;
+    }
+    if(numFinished == 0) {
+      Model.nextPlayer();
+    }
   },
   nextPlayer: function() {
     Model.curPlayer += 1;
@@ -176,12 +193,15 @@ var Model = {
 };
 
 Model.Square.prototype.checkFinished = function(player) {
-  if(this.top.selected
-  && this.right.selected
-  && this.bottom.selected
-  && this.left.selected
-  && player) {
+  if( !this.owner
+    && this.top.selected
+    && this.right.selected
+    && this.bottom.selected
+    && this.left.selected
+    && player) {
     this.owner = player;
     player.squares.push(this);
+    return true;
   }
+  return false;
 };
