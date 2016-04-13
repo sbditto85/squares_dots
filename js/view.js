@@ -25,6 +25,10 @@ var View = {
   insertGridHtml: function(html) {
     document.getElementById("game_grid").innerHTML = html;
   },
+  resetGridHtml: function(width, height) {
+    var html = View.genBlankGrid(width, height);
+    View.insertGridHtml(html);
+  },
   // playersInfo [{name: , color: , isTurn: , score: }]
   genPlayerGrid: function(playersInfo) {
     var html = "<div id='player_grid_wrapper'>";

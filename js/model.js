@@ -189,6 +189,77 @@ var Model = {
     this.name = name;
     this.color = color;
     this.squares = []; // [[x,y]]
+  },
+  fetchJson: function() {
+    var request = new XMLHttpRequest();
+    request.open("GET","data/info.json", false);
+    request.onreadystatechange = function() {
+      if(request.readyState == 4) {
+        var json = JSON.parse(request.responseText);
+        Model.parseJson(json);
+      }
+    };
+    request.send(null);
+  },
+  parseJson: function(json) {
+    var oldPlayers = Model.players;
+    var oldSquares = Model.squares;
+    Model.players = [];
+    var players = json.players;
+    for(var i = 0; i < players.length; i++) {
+      var player = players[i];
+      Model.players[i] = new Model.Player(player.name, player.color);
+    }
+    Model.squares = [];
+    var squares = json.squares;
+    var top, left, bottom, right = false;
+    for(var j = 0; j < squares.length; j++) {
+      for(var i = 0; i < squares[j].length; i++) {
+        top = left = right = bottom = null;
+        var square = squares[j][i];
+        //TODO: check if already exists before creating
+        if(i > 0) {
+          left = Model.squares[j][i-1].right;
+        } else {
+          left = new Model.Line(square.left);
+        }
+        right = new Model.Line(square.right);
+        bottom = new Model.Line(square.bottom);
+        if(j > 0) {
+          top = Model.squares[j-1][i].bottom;
+        } else {
+          top = new Model.Line(square.top);
+        }
+        owner = Model.findPlayer(square.owner);
+        if(typeof Model.squares[j] == "undefined") {
+          Model.squares[j] = [];
+        }
+        Model.squares[j][i] = new Model.Square(top, right, bottom, left, owner);
+        if(owner != null) {
+          owner.squares.push(Model.squares[j][i]);
+        }
+      }
+    }
+    Model.curPlayer = Model.findPlayerIndex(json.current_player);
+    Controller.modelUpdated();
+  },
+  findPlayer: function(name) {
+    for(var i = 0; i < Model.players.length; i++) {
+      var player = Model.players[i];
+      if(player.name == name) {
+        return player;
+      }
+    }
+    return null;
+  },
+  findPlayerIndex: function(name) {
+    for(var i = 0; i < Model.players.length; i++) {
+      var player = Model.players[i];
+      if(player.name == name) {
+        return i;
+      }
+    }
+    return 0;
   }
 };
 

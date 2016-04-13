@@ -1,9 +1,9 @@
 var Controller = {
+  width: 5,
+  height: 5,
   init: function() {
-    var width = 5;
-    var height = 5;
-    Model.init(["Player 1", "Player 2"], width, height);
-    View.init(width, height, Model.getPlayersInfo());
+    Model.init(["Player 1", "Player 2"], Controller.width, Controller.height);
+    View.init(Controller.width, Controller.height, Model.getPlayersInfo());
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
     View.addEvents();
@@ -11,6 +11,13 @@ var Controller = {
   },
   setLineMarked: function(x, y, side) {
     Model.setLineMarked(x, y, side);
+    View.updateLines(Model.getMarkedLines());
+    View.updateSquares(Model.getCompletedSquares());
+    View.updatePlayers(Model.getPlayersInfo());
+    View.addEvents();
+  },
+  modelUpdated: function() {
+    View.resetGridHtml(Controller.width, Controller.height);
     View.updateLines(Model.getMarkedLines());
     View.updateSquares(Model.getCompletedSquares());
     View.updatePlayers(Model.getPlayersInfo());

@@ -1,0 +1,204 @@
+{
+  "players": [
+    {
+      "name": "NP 1",
+      "color": "blue"
+    },
+    {
+      "name": "NP 2",
+      "color": "purple"
+    },
+    {
+      "name": "NP 3",
+      "color": "orange"
+    }
+  ],
+  "current_player": "NP 2",
+  "squares": [
+    [
+      {
+        "left": true,
+        "right": true,
+        "top": true,
+        "bottom": true,
+        "owner": "NP 3"
+      },
+      {
+        "left": true,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      }
+    ],
+    [
+      {
+        "left": false,
+        "right": false,
+        "top": true,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      }
+    ],
+    [
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      }
+    ],
+    [
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": true,
+        "owner": ""
+      }
+    ],
+    [
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": false,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": false,
+        "right": true,
+        "top": false,
+        "bottom": false,
+        "owner": ""
+      },
+      {
+        "left": true,
+        "right": true,
+        "top": true,
+        "bottom": true,
+        "owner": "NP 2"
+      }
+    ]
+  ]
+}
